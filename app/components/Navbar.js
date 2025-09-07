@@ -15,7 +15,7 @@ export default function Navbar() {
         if (!res.ok) throw new Error("Failed to fetch profile");
         setProfile(await res.json());
       } catch {
-        setError("Failed to load profile");
+        setError("");
       }
     })();
 

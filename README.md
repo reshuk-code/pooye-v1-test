@@ -1,8 +1,23 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a Next.js + MongoDB app for confessions and anonymous messaging.
 
 ## Getting Started
 
-First, run the development server:
+First, set environment variables by creating a `.env.local` file:
+
+```
+MONGODB_URI=mongodb+srv://<user>:<password>@<cluster>/<db>
+MONGODB_DB=pooye
+JWT_SECRET=change_this_secret
+ENCRYPTION_KEY=<32-byte base64 key>
+
+# Cloudinary
+CLOUDINARY_URL=cloudinary://927754439461881:g76kvbghcrz5Hyz4vyDuwoKP0Uw@dnqfntwus
+CLOUDINARY_CLOUD_NAME=dnqfntwus
+CLOUDINARY_API_KEY=927754439461881
+CLOUDINARY_API_SECRET=g76kvbghcrz5Hyz4vyDuwoKP0Uw
+```
+
+Run the development server:
 
 ```bash
 npm run dev

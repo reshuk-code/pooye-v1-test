@@ -22,7 +22,7 @@ export default function ProfilePage() {
       setLoading(true);
       try {
         const res = await fetch("/api/profile", { cache: "no-store", origin: process.env.FRONTEND_URL  });
-        if (!res.ok) throw new Error("Failed to fetch profile");
+        if (!res.ok) throw new Error("Login to continue :(");
         const data = await res.json();
         setProfile(data);
         setUsername(data.username || "");

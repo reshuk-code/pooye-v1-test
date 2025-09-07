@@ -21,7 +21,7 @@ export default function ProfilePage() {
     (async () => {
       setLoading(true);
       try {
-        const res = await fetch("/api/profile", { cache: "no-store" });
+        const res = await fetch("/api/profile", { cache: "no-store", origin: process.env.FRONTEND_URL  });
         if (!res.ok) throw new Error("Failed to fetch profile");
         const data = await res.json();
         setProfile(data);
@@ -40,8 +40,8 @@ export default function ProfilePage() {
     (async () => {
       try {
         const [cRes, mRes] = await Promise.all([
-          fetch("/api/confessions?author=me", { cache: "no-store" }),
-          fetch("/api/messages", { cache: "no-store" }),
+          fetch("/api/confessions?author=me", { cache: "no-store", origin: process.env.FRONTEND_URL  }),
+          fetch("/api/messages", { cache: "no-store", origin: process.env.FRONTEND_URL  }),
         ]);
         if (!cRes.ok) throw new Error("Failed to fetch confessions");
         if (!mRes.ok) throw new Error("Failed to fetch messages");
@@ -71,7 +71,7 @@ export default function ProfilePage() {
         });
         form.append("avatar", b64);
       }
-      const res = await fetch("/api/profile", { method: "PUT", body: form });
+      const res = await fetch("/api/profile", { method: "PUT", body: form, origin: process.env.FRONTEND_URL });
       if (!res.ok) throw new Error("Failed to update profile");
       setStatus("Saved");
     } catch (err) {
@@ -87,7 +87,7 @@ export default function ProfilePage() {
     setStatus("");
     setError("");
     try {
-      const res = await fetch(`/api/confessions/${id}`, { method: "DELETE" });
+      const res = await fetch(`/api/confessions/${id}`, { method: "DELETE" , origin: process.env.FRONTEND_URL});
       if (!res.ok) throw new Error("Failed to delete confession");
       setConfessions(confessions.filter((c) => c.id !== id));
       setStatus("Confession deleted");
@@ -109,6 +109,7 @@ export default function ProfilePage() {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ title: editTitle, text: editText }),
+         origin: process.env.FRONTEND_URL
       });
       if (!res.ok) throw new Error("Failed to update confession");
       setConfessions((prev) =>
@@ -133,7 +134,7 @@ export default function ProfilePage() {
     setStatus("");
     setError("");
     try {
-      const res = await fetch("/api/profile", { method: "DELETE" });
+      const res = await fetch("/api/profile", { method: "DELETE", origin: process.env.FRONTEND_URL });
       if (!res.ok) throw new Error("Failed to delete account");
       location.assign("/");
     } catch (err) {

@@ -25,8 +25,8 @@ export default function ConfessionDetail() {
       setLoading(true);
       try {
         const [confRes, commentsRes] = await Promise.all([
-          fetch(`/api/confessions/${id}`, { cache: "no-store" }),
-          fetch(`/api/confessions/${id}/comments`, { cache: "no-store" }),
+          fetch(`/api/confessions/${id}`, { cache: "no-store", origin: process.env.FRONTEND_URL }),
+          fetch(`/api/confessions/${id}/comments`, { cache: "no-store", origin: process.env.FRONTEND_URL }),
         ]);
         if (!confRes.ok) throw new Error("Failed to fetch confession");
         if (!commentsRes.ok) throw new Error("Failed to fetch comments");
@@ -49,11 +49,12 @@ export default function ConfessionDetail() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text, parent: replyTo }),
+         origin: process.env.FRONTEND_URL
       });
       if (!res.ok) throw new Error("Failed to add comment");
       setText("");
       setReplyTo(null);
-      const refresh = await fetch(`/api/confessions/${id}/comments`, { cache: "no-store" });
+      const refresh = await fetch(`/api/confessions/${id}/comments`, { cache: "no-store" , origin: process.env.FRONTEND_URL});
       if (!refresh.ok) throw new Error("Failed to refresh comments");
       setComments(await refresh.json());
     } catch (err) {

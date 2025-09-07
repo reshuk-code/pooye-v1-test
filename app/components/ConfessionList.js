@@ -13,7 +13,7 @@ export default function ConfessionList({ query }) {
       setLoading(true);
       try {
         const url = query ? `/api/confessions?q=${encodeURIComponent(query)}` : "/api/confessions";
-        const res = await fetch(url, { signal: controller.signal, cache: "no-store" });
+        const res = await fetch(url, { signal: controller.signal, cache: "no-store", origin: process.env.FRONTEND_URL });
         if (!res.ok) throw new Error("Failed to fetch confessions");
         const data = await res.json();
         setItems(Array.isArray(data) ? data : []);
@@ -46,7 +46,7 @@ export default function ConfessionList({ query }) {
       )
     );
     try {
-      const res = await fetch(`/api/confessions/${id}/react?type=${encodeURIComponent(type)}`, { method: "POST" });
+      const res = await fetch(`/api/confessions/${id}/react?type=${encodeURIComponent(type)}`, { method: "POST", origin: process.env.FRONTEND_URL });
       if (!res.ok) throw new Error("Failed to react");
     } catch (error) {
       console.error("React error:", error);
@@ -61,7 +61,7 @@ export default function ConfessionList({ query }) {
     const originalItems = [...items];
     setItems((prev) => prev.map((c) => (c.id === id ? { ...c, shares: (c.shares || 0) + 1 } : c)));
     try {
-      const res = await fetch(`/api/confessions/${id}/share`, { method: "POST" });
+      const res = await fetch(`/api/confessions/${id}/share`, { method: "POST" , origin: process.env.FRONTEND_URL});
       if (!res.ok) throw new Error("Failed to share");
     } catch (error) {
       console.error("Share error:", error);
@@ -74,7 +74,7 @@ export default function ConfessionList({ query }) {
   async function repost(id) {
     setActionLoading((prev) => ({ ...prev, [id]: true }));
     try {
-      const res = await fetch(`/api/confessions/${id}/repost`, { method: "POST" });
+      const res = await fetch(`/api/confessions/${id}/repost`, { method: "POST" , origin: process.env.FRONTEND_URL});
       if (!res.ok) throw new Error("Failed to repost");
     } catch (error) {
       console.error("Repost error:", error);

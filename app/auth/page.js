@@ -15,11 +15,11 @@ export default function AuthPage() {
     setError("");
     try {
       if (mode === "signup") {
-        const res = await fetch("/api/auth/signup", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email: form.email, username: form.username, password: form.password }) });
+        const res = await fetch("/api/auth/signup", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email: form.email, username: form.username, password: form.password }), origin: process.env.FRONTEND_URL });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || "Failed");
       } else {
-        const res = await fetch("/api/auth/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ emailOrUsername: form.emailOrUsername, password: form.password }) });
+        const res = await fetch("/api/auth/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ emailOrUsername: form.emailOrUsername, password: form.password }),  origin: process.env.FRONTEND_URL });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || "Failed");
       }

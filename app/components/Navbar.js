@@ -11,7 +11,7 @@ export default function Navbar() {
     // Fetch profile
     (async () => {
       try {
-        const res = await fetch("/api/profile", { cache: "no-store" });
+        const res = await fetch("/api/profile", { cache: "no-store", origin: process.env.FRONTEND_URL });
         if (!res.ok) throw new Error("Failed to fetch profile");
         setProfile(await res.json());
       } catch {

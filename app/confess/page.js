@@ -39,7 +39,7 @@ export default function ConfessPage() {
       formData.append("title", title);
       formData.append("text", text);
       formData.append("files", JSON.stringify(files));
-      const res = await fetch("/api/confessions", { method: "POST", body: formData });
+      const res = await fetch("/api/confessions", { method: "POST", body: formData ,  origin: process.env.FRONTEND_URL });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to post");
       setTitle("");
